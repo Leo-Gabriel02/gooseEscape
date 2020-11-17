@@ -61,6 +61,7 @@ bool captured(Actor const & player, Actor const & monster);
 */
 
 void movePlayer(int key, Actor & player, int map[MAX_BOARD_X][MAX_BOARD_Y]);
+void gooseMove(Actor & player, Actor & goose, int map[MAX_BOARD_X][MAX_BOARD_Y]);
 
 /*
     What other functions do you need to make the game work?  What can you

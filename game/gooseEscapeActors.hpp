@@ -91,5 +91,7 @@ class Actor
         terminal_refresh();
     }
     
+    
+    
 };
 #endif

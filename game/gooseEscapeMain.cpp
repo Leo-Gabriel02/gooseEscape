@@ -29,7 +29,7 @@ int main()
 	Actor player(PLAYER_CHAR, 10,10);  // you probably don't want to start in the same place each time
 	
 	//make the monster
-	Actor monster(MONSTER_CHAR, 70,20);
+	Actor goose(MONSTER_CHAR, 70,20);
 	
 	// Declare the array that will hold the game board "map"
     int map[MAX_BOARD_X][MAX_BOARD_Y] = {EMPTY};
@@ -55,7 +55,7 @@ int main()
   	game_world_print(map);
   	
 	// Printing the instructions
-    out.writeLine("Escape the Goose! " + monster.get_location_string());
+    out.writeLine("Escape the Goose! " + goose.get_location_string());
 	out.writeLine("Use the arrow keys to move");
 	out.writeLine("If the goose catches you, you lose!");
 	out.writeLine("Be careful! Sometimes the goose can jump through walls!");
@@ -74,7 +74,7 @@ int main()
     
     
     while(keyEntered != TK_ESCAPE && keyEntered != TK_CLOSE 
-                    && !captured(player,monster) && has_not_won)
+                    && !captured(player,goose) && has_not_won)
 	{
 	    // get player key press
 	    keyEntered = terminal_read();
@@ -85,7 +85,7 @@ int main()
     	    movePlayer(keyEntered,player,map);
 
             // call the goose's chase function
-            
+            gooseMove(player, goose, map);
             // call other functions to do stuff?	    
         }
   	}
