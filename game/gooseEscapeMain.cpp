@@ -83,6 +83,11 @@ int main()
         {
             // move the player, you can modify this function
     	    movePlayer(keyEntered,player,map);
+    	    
+    	    if(map[player.get_x()][player.get_y()] == WINNER)
+    	    {
+    	    	has_not_won = false;	
+			}
 
             // call the goose's chase function
             
@@ -93,7 +98,17 @@ int main()
     if (keyEntered != TK_CLOSE)
     {
       	//once we're out of the loop, the game is over
-        out.writeLine("Game has ended");
+        if(has_not_won == false)
+        {
+        	out.writeLine("Congratulations! You have won!");
+		}
+		else
+		{
+			out.writeLine("You have been captured by the goose, and have lost.");
+		}
+		
+		out.writeLine("The game has ended.");
+        out.writeLine("Please close the console now.");
     
         // output why:  did the goose get us, or did we get to the win location?
 	
