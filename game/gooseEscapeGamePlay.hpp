@@ -13,7 +13,7 @@
     Declare constants to indicate various game world features in the board
     array.  Modify them to fit what you would like to do in the game.  You can
     change the type if you choose to store your game board as something other
-    than intengers.
+    than integers.
 */	
 // Going further:  Learn how to use an enum for these values
 const int EMPTY = 0;
@@ -36,6 +36,9 @@ const int WIN_CHAR = int('%'); //% sign, a special character used in the ancient
 
 // print the game board function protype
 
+void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y]);
+
+
 /*
     Do something when the goose captures the player
     
@@ -57,7 +60,7 @@ bool captured(Actor const & player, Actor const & monster);
     You could decide to learn about switch statements and use them here.
 */
 
-void movePlayer(int key, Actor & player, /* game board array and any other parameters */);
+void movePlayer(int key, Actor & player, int map[MAX_BOARD_X][MAX_BOARD_Y]);
 
 /*
     What other functions do you need to make the game work?  What can you

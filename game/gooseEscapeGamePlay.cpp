@@ -30,8 +30,23 @@ y direction
 */
 
 // print the game board function
+void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y])
 {
-    terminal_put(x_location_on_board,y_location_on_board,WIN_CHAR);
+	for(int y_location = 0; y_location < MAX_BOARD_Y; y_location++)
+	{
+		for(int x_location = 0; x_location < MAX_BOARD_X; x_location++)
+		{
+			if(map[x_location][y_location] == SHALL_NOT_PASS)
+			{
+				terminal_put(x_location, y_location, WALL_CHAR);
+			}
+			else if(map[x_location][y_location] == WINNER)
+			{
+				terminal_put(x_location, y_location, WIN_CHAR);
+			}
+		}
+	}
+	terminal_refresh();
 }
 
 /*
@@ -60,7 +75,7 @@ bool captured(Actor const & player, Actor const & monster)
     You could decide to learn about switch statements and use them here.
 */
 
-void movePlayer(int key, Actor & player, /* game board array and any other parameters */);
+void movePlayer(int key, Actor & player, int map[MAX_BOARD_X][MAX_BOARD_Y])
 {
     int yMove = 0, xMove = 0;
     if (key == TK_UP)
@@ -73,7 +88,8 @@ void movePlayer(int key, Actor & player, /* game board array and any other param
         xMove = 1;
         
     if (player.can_move(xMove, yMove) 
-      && /*new location on game board */ != SHALL_NOT_PASS)
+      && map[player.get_x() + xMove][player.get_y() + yMove]
+	   != SHALL_NOT_PASS)
         player.update_location(xMove, yMove);
 }
 
