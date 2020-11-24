@@ -91,6 +91,10 @@ void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y])
 			{
 				terminal_put(x_location, y_location, WIN_CHAR);
 			}
+			else if(map[x_location][y_location] == SLOW_GOOSE)
+			{
+				terminal_put(x_location, y_location, SLOW_GOOSE_CHAR);
+			}
 		}
 	}
 	terminal_refresh();
@@ -166,19 +170,19 @@ void gooseMove(Actor & player, Actor & goose, int map[MAX_BOARD_X][MAX_BOARD_Y])
 	}
     if (goose.can_move(xMove, yMove))
 	{
-		if(map[player.get_x() + xMove][player.get_y() + yMove] != SHALL_NOT_PASS)
+		if(map[goose.get_x() + xMove][goose.get_y() + yMove] != SHALL_NOT_PASS)
 		{
 			goose.update_location(xMove, yMove);
 		}
-		else //you've run into a wall or smthn. there will be at least 1 side with no wall so check each side and move into empty
+		else //you've run into a wall there will be at least 1 side with no wall so check each side and move into empty
 		{
-			if(map[player.get_x() + xMove + 1][player.get_y() + yMove] && goose.can_move(xMove + 1, yMove))
+			if(!map[goose.get_x() + xMove + 1][goose.get_y() + yMove] && goose.can_move(xMove + 1, yMove))
 	  		    goose.update_location(xMove + 1, yMove);
-			else if(map[player.get_x() + xMove - 1][player.get_y() + yMove] && goose.can_move(xMove - 1, yMove))
+			else if(!map[goose.get_x() + xMove - 1][goose.get_y() + yMove] && goose.can_move(xMove - 1, yMove))
 	  		    goose.update_location(xMove - 1, yMove);
-			else if(map[player.get_x() + xMove][player.get_y() + yMove + 1] && goose.can_move(xMove, yMove + 1))
+			else if(!map[goose.get_x() + xMove][goose.get_y() + yMove + 1] && goose.can_move(xMove, yMove + 1))
 	  		    goose.update_location(xMove, yMove + 1);
-			else if(map[player.get_x() + xMove][player.get_y() + yMove - 1] && goose.can_move(xMove, yMove - 1))
+			else if(!map[goose.get_x() + xMove][goose.get_y() + yMove - 1] && goose.can_move(xMove, yMove - 1))
 	  		    goose.update_location(xMove, yMove - 1);
 		}
 	}

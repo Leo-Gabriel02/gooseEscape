@@ -53,16 +53,21 @@ int main()
   	
     //declare amount of walls that are randomly distributed
 	int const WALL_AMOUNT = 40;
-	
+	int const POWERUP_AMOUNT = 5;
 	//place walls in random locations
 	for(int count = 0; count < WALL_AMOUNT; count++)
 	{
 		randomObjectPlacement(map, SHALL_NOT_PASS);
 	}
+    //place 5 powerups to slow the goose down and 5 to ___
+	for(int count = 0; count < POWERUP_AMOUNT; count++)
+	{
+		randomObjectPlacement(map, SLOW_GOOSE);
+	}    
     
-    
+    //place objective %
 	randomObjectPlacement(map, WINNER);
-  	
+	
     // Call the function to print the game board
   	game_world_print(map);
   	
