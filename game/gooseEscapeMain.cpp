@@ -1,6 +1,7 @@
 #include <BearLibTerminal.h>
 #include <cmath>
 #include <iostream>
+#include <ctime>
 using namespace std;
 #include "gooseEscapeUtil.hpp"
 #include "gooseEscapeActors.hpp"
@@ -15,6 +16,9 @@ int main()
 	//Set up the window.  Don't edit these two lines
     terminal_open();
   	terminal_set(SETUP_MESSAGE);
+  	
+  	//set random seed for number generator
+  	srand((unsigned) time(0));
 
 /*
     The code below provides a skeleton of the game play.  You will need to
@@ -34,22 +38,30 @@ int main()
 	// Declare the array that will hold the game board "map"
     int map[MAX_BOARD_X][MAX_BOARD_Y] = {EMPTY};
   	
-/*
-    Initiallize locations in the game board to have game features.  What if you
-    have many things to add to the game board?  Should you use a loop?  Does it
-    make sense to store this information in a file?  Should this code be a
-    function as well?
-*/
-    int const WALL_AMOUNT = 10;
-    int const WALL_OFFSET_X = 8;
-    int const WALL_LOCA_Y = 13;
+  	
+  	
+  	//amount of straight wall segments, and the initial length
+  	int const STRAIGHT_WALL_AMOUNT = 6;
+  	int length = 3;
+  	
+  	for(int count = 0; count < STRAIGHT_WALL_AMOUNT; count++)
+  	{
+  		straightWalls(map, length);
+  		length += 2;
+	}
+  	
+  	
+    //declare amount of walls that are randomly distributed
+	int const WALL_AMOUNT = 40;
+	
+	//place walls in random locations
 	for(int count = 0; count < WALL_AMOUNT; count++)
-		map[count+WALL_OFFSET_X][WALL_LOCA_Y] = SHALL_NOT_PASS;
+	{
+		randomObjectPlacement(map, SHALL_NOT_PASS);
+	}
     
     
-    int const WIN_LOCA_X = 15;
-    int const WIN_LOCA_Y = 16;
-	map[WIN_LOCA_X][WIN_LOCA_Y] = WINNER;
+	randomObjectPlacement(map, WINNER);
   	
     // Call the function to print the game board
   	game_world_print(map);

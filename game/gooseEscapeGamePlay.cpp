@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
 using namespace std;
 #include <BearLibTerminal.h>
 #include "gooseEscapeUtil.hpp"
@@ -28,6 +29,52 @@ y direction
     The functions should draw characters to present features of the game
     board, e.g. win location, obstacles, power ups
 */
+
+
+
+// gets random x and y co-ordinates that are currently empty
+void randomObjectPlacement(int map[MAX_BOARD_X][MAX_BOARD_Y], int tile)
+{
+	//Get random values for x and y that are on the board
+	int x = rand() % MAX_BOARD_X;
+	int y = rand() % MAX_BOARD_Y;
+	
+	//Ensure that selected location is empty
+	while(map[x][y] != EMPTY)
+	{
+		x = rand() % MAX_BOARD_X;
+		y = rand() % MAX_BOARD_Y;
+	}
+	
+	map[x][y] = tile;
+}
+
+
+//creates continuous straight wall segments
+//Note: overlaps are allowed and can create corners or even longer wall segments
+void straightWalls(int map[MAX_BOARD_X][MAX_BOARD_Y], int length)
+{
+	//Get random values for x and y that are on the board
+	int x = rand() % (MAX_BOARD_X - length);
+	int y = rand() % (MAX_BOARD_Y - length);
+	
+	// 50/50 for if walls are vertical or horizontal
+	int odd_or_even = rand() % 2;
+	
+	for(int count = 0; count < length; count++)
+	{
+		if(odd_or_even == 0) // horizontal walls
+		{
+			map[x + count][y] = SHALL_NOT_PASS;
+		}
+		else // vertical walls
+		{
+			map[x][y + count] = SHALL_NOT_PASS;
+		}
+	}
+}
+
+
 
 // print the game board function
 void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y])

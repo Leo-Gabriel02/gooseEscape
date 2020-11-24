@@ -34,6 +34,12 @@ const int WIN_CHAR = int('%'); //% sign, a special character used in the ancient
     Game play function prototypes are give below.
 */
 
+// places objects randomly into the map, e.g walls, win_char, etc
+void randomObjectPlacement(int map[MAX_BOARD_X][MAX_BOARD_Y], int tile);
+
+void straightWalls(int map[MAX_BOARD_X][MAX_BOARD_Y], int length);
+
+
 // print the game board function protype
 
 void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y]);
