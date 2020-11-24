@@ -22,6 +22,7 @@ class Actor
   private:
     int actorChar;      
     int location_x, location_y;
+    int speed;
 
   public:
     Actor()
@@ -30,14 +31,16 @@ class Actor
         location_x = MIN_SCREEN_X;
         location_y = MIN_SCREEN_Y;
         put_actor();
+        speed = 1;
     }
 
-    Actor(char initPlayerChar, int x0, int y0)
+    Actor(char initPlayerChar, int x0, int y0, int speed0)
     {
         change_char(initPlayerChar);
         location_x = MIN_SCREEN_X;
         location_y = MIN_SCREEN_Y;
         update_location(x0,y0);
+        speed = speed0;
     }
     
     int get_x() const
@@ -49,6 +52,16 @@ class Actor
     {
         return location_y;
     }
+    
+    int get_speed() const
+    {
+    	return speed;
+	}
+    
+    void change_speed(int new_speed)
+    {
+    	speed = abs(new_speed);
+	}
     
     string get_location_string() const
     {

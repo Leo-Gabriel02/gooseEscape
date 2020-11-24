@@ -125,14 +125,15 @@ bool captured(Actor const & player, Actor const & monster)
 void movePlayer(int key, Actor & player, int map[MAX_BOARD_X][MAX_BOARD_Y])
 {
     int yMove = 0, xMove = 0;
-    if (key == TK_UP)
-        yMove = -1;
+    int speed = player.get_speed();
+	if (key == TK_UP)
+        yMove = -speed;
     else if (key == TK_DOWN)
-        yMove = 1;
+        yMove = speed;
     else if (key == TK_LEFT)
-        xMove = -1;
+        xMove = -speed;
     else if (key == TK_RIGHT)
-        xMove = 1;
+        xMove = speed;
         
     if (player.can_move(xMove, yMove) 
       && map[player.get_x() + xMove][player.get_y() + yMove] != SHALL_NOT_PASS)
@@ -144,21 +145,22 @@ void gooseMove(Actor & player, Actor & goose, int map[MAX_BOARD_X][MAX_BOARD_Y])
 	 int xMove = 0, yMove = 0;
 	 int deltaX = player.get_x() - goose.get_x();
 	 int deltaY = player.get_y() - goose.get_y();
+	 int gooseSpeed = goose.get_speed();
 	 if(abs(deltaX) > abs(deltaY))	//further in x direction so move in x direction
 	 {
 		if(deltaX < -1)	//goose is to the right(+x) of player so must move left(-x)
- 		    xMove = -2;
+ 		    xMove = -gooseSpeed;
 		else if(deltaX > 1) //goose is to the right(+x) of player so must move left(-x)
-			xMove = 2;
+			xMove = gooseSpeed;
 		else 
 			xMove = deltaX; //goose is adjacent so just move one to catch player
 	}
 	else	//more distance to travel in y direction so choose to move that way
 	{
 		if(deltaY < -1)	//goose is further down(+y) of player so must move up(-y)
- 		    yMove = -2;
+ 		    yMove = -gooseSpeed;
 		else if(deltaY > 1) //goose is higher(-y) than player so must move left(+sy)
-			yMove = 2;
+			yMove = gooseSpeed;
 		else 
 			yMove = deltaY; //goose is adjacent so just move one to catch player
 	}

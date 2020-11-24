@@ -30,10 +30,10 @@ int main()
 */
  	
     //make the player
-	Actor player(PLAYER_CHAR, 10,10);  // you probably don't want to start in the same place each time
+	Actor player(PLAYER_CHAR, 10,10,1);  // you probably don't want to start in the same place each time
 	
 	//make the monster
-	Actor goose(MONSTER_CHAR, 70,20);
+	Actor goose(MONSTER_CHAR, 70,20,2);
 	
 	// Declare the array that will hold the game board "map"
     int map[MAX_BOARD_X][MAX_BOARD_Y] = {EMPTY};
