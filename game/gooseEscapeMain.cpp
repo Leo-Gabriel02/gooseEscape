@@ -38,8 +38,16 @@ int main()
 	// Declare the array that will hold the game board "map"
     int map[MAX_BOARD_X][MAX_BOARD_Y] = {EMPTY};
   	
-  	
-  	
+  	const int PORTAL_OFFSET = 1;
+  	//portal between top left and bottom right
+    int portal1[2][2] = {PORTAL_OFFSET, PORTAL_OFFSET, MAX_BOARD_X-PORTAL_OFFSET, MAX_BOARD_Y-PORTAL_OFFSET};
+    map[PORTAL_OFFSET][PORTAL_OFFSET] = PORTAL;
+    map[MAX_BOARD_X-PORTAL_OFFSET][MAX_BOARD_Y-PORTAL_OFFSET] = PORTAL;
+    //portal between bottom left and top right
+    int portal2[2][2] = {PORTAL_OFFSET, MAX_BOARD_Y-PORTAL_OFFSET, MAX_BOARD_X-PORTAL_OFFSET, PORTAL_OFFSET};
+  	map[PORTAL_OFFSET][MAX_BOARD_Y-PORTAL_OFFSET] = PORTAL;
+    map[MAX_BOARD_X-PORTAL_OFFSET][PORTAL_OFFSET] = PORTAL;
+    
   	//amount of straight wall segments, and the initial length
   	int const STRAIGHT_WALL_AMOUNT = 6;
   	int length = 3;
@@ -59,7 +67,7 @@ int main()
 	{
 		randomObjectPlacement(map, SHALL_NOT_PASS);
 	}
-    //place 5 powerups to slow the goose down and 5
+    //place 5 powerups to slow the goose
 	for(int count = 0; count < POWERUP_AMOUNT; count++)
 	{
 		randomObjectPlacement(map, SLOW_GOOSE);
@@ -82,44 +90,74 @@ int main()
     as long as they do not press escape or close, they are not captured by
     the goose, and they didn't reach the win tile
 */
-/*
-    All key presses start with "TK_" then the character.  So "TK_A" is the "a"
-    key being pressed.
-*/
+
     int keyEntered = TK_A;  // can be any valid value that is not ESCAPE or CLOSE
     bool has_not_won = true;
-    int goose_slow_counter = 0;
-    const int GOOSE_SLOW_TICKS = 10;
+    int goose_slow_counter = 0;	//counts how long the goose has been slowed
+    const int GOOSE_SLOW_TICKS = 15; //amount of time the goose slows when powerup
+    
+    
+    
+    bool teleported1 = false, teleported2 = false;
     
     while(keyEntered != TK_ESCAPE && keyEntered != TK_CLOSE 
 			      && !captured(player,goose) && has_not_won)
 	{
-	    // get player key press
-	    keyEntered = terminal_read();
+	    keyEntered = terminal_read(); // get player key press
+
 
         if (keyEntered != TK_ESCAPE && keyEntered != TK_CLOSE)
         {
             // move the player, you can modify this function
     	    movePlayer(keyEntered,player,map);
-    	    
-    	    if(map[player.get_x()][player.get_y()] == WINNER)
-    	    {
-    	    	has_not_won = false;	
+
+			if(!teleported1)
+			{
+			    //portal 1 corner 1
+				if(player.get_x() == portal1[0][0] && player.get_y() == portal1[0][1]){
+					teleported1 = true;	
+		  		    player.teleport(portal1[1][0], portal1[1][1]); //teleport to portal 1 corner 2
+				}
+				//portal 1 corner 2
+				else if(player.get_x() == portal1[1][0] && player.get_y() == portal1[1][1]){
+    			    teleported1 = true;
+			        player.teleport(portal1[0][0], portal1[0][1]); //teleport to portal 1 corner 2
+				}
 			}
-			if(goose_slow_counter == 1)
+			if(!teleported2)
+			{
+			    //portal 2 corner 1
+			    if(player.get_x() == portal2[0][0] && player.get_y() == portal2[0][1]){
+					teleported2 = true;	
+	  		        player.teleport(portal2[1][0], portal2[1][1]); //teleport to portal 2 corner 2
+	  		    }
+			    //portal 2 corner 2
+			    else if(player.get_x() == portal2[1][0] && player.get_y() == portal2[1][1]){
+					teleported2 = true;	
+   			 	    player.teleport(portal2[0][0], portal2[0][1]); //teleport to portal 2 corner 2
+   			 	}
+				teleported2 = true;
+			}
+
+
+    	    if(map[player.get_x()][player.get_y()] == WINNER)
+    	    	has_not_won = false;	
+			
+			
+			if(goose_slow_counter == 1)	//change goose speed back to 1 on last tick
 	  		    goose.speed_up();
-			goose_slow_counter--;
-			if(map[player.get_x()][player.get_y()] == SLOW_GOOSE)
+			goose_slow_counter--;	//decrement counter each tick
+			
+			if(map[player.get_x()][player.get_y()] == SLOW_GOOSE) //when get powerup
     	    {
  	 		    player.get_powerup(map);
- 	 		    if(goose_slow_counter <= 0)
+ 	 		    if(goose_slow_counter <= 0) //no active powerup
 	  			    goose.slow_down();	//only slow down the goose if it isnt slow already
   			    goose_slow_counter = GOOSE_SLOW_TICKS;	//always set the counter to 10
 			}
 
             // call the goose's chase function
             gooseMove(player, goose, map);
-            // call other functions to do stuff?	    
         }
   	}
 
@@ -134,12 +172,10 @@ int main()
 		{
 			out.writeLine("You have been captured by the goose, and have lost.");
 		}
-		
+			
 		out.writeLine("The game has ended.");
         out.writeLine("Please close the console now.");
-    
-        // output why:  did the goose get us, or did we get to the win location?
-	
+    	
     	// Wait until user closes the window
         while (terminal_read() != TK_CLOSE);
     }

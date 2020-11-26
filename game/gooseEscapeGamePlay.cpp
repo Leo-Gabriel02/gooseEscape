@@ -95,6 +95,10 @@ void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y])
 			{
 				terminal_put(x_location, y_location, SLOW_GOOSE_CHAR);
 			}
+			else if(map[x_location][y_location] == PORTAL)
+			{
+				terminal_put(x_location, y_location, PORTAL_CHAR);
+			}
 		}
 	}
 	terminal_refresh();

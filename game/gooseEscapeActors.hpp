@@ -98,6 +98,13 @@ class Actor
         }
     }
     
+    void teleport(int newX, int newY){
+        terminal_clear_area(location_x, location_y, 1, 1);
+    	location_x = newX;
+    	location_y = newY;
+    	put_actor();
+	}
+    
     void put_actor() const
     {
         terminal_put(location_x, location_y, actorChar);

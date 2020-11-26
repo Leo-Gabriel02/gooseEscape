@@ -20,6 +20,7 @@ const int EMPTY = 0;
 const int SHALL_NOT_PASS = 1;
 const int WINNER = 2;
 const int SLOW_GOOSE = 3;
+const int PORTAL = 4;
 
 /*
     A few examples of characters both for actors and for the game board
@@ -31,6 +32,7 @@ const int MONSTER_CHAR = int('G');
 const int WALL_CHAR = int('o');
 const int WIN_CHAR = int('%'); //% sign, a special character used in the ancient game "Rogue"
 const int SLOW_GOOSE_CHAR = int('S');
+const int PORTAL_CHAR = int('P');
 
 /*
     Game play function prototypes are give below.
