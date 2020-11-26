@@ -140,8 +140,10 @@ void movePlayer(int key, Actor & player, int map[MAX_BOARD_X][MAX_BOARD_Y])
         xMove = speed;
         
     if (player.can_move(xMove, yMove) 
-      && map[player.get_x() + xMove][player.get_y() + yMove] != SHALL_NOT_PASS)
-        player.update_location(xMove, yMove);
+ 	  && map[player.get_x() + xMove][player.get_y() + yMove] != SHALL_NOT_PASS)
+  	{
+		player.update_location(xMove, yMove);
+	}
 }
 
 void gooseMove(Actor & player, Actor & goose, int map[MAX_BOARD_X][MAX_BOARD_Y])	//goose will move 2 places per game tick
@@ -187,6 +189,7 @@ void gooseMove(Actor & player, Actor & goose, int map[MAX_BOARD_X][MAX_BOARD_Y])
 		}
 	}
 }
+
 
 
 

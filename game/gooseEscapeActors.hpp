@@ -104,7 +104,22 @@ class Actor
         terminal_refresh();
     }
     
-    
+    void get_powerup(int map[MAX_BOARD_X][MAX_BOARD_Y])
+	{
+	    terminal_clear_area(location_x, location_y, 1, 1);
+	    map[location_x][location_y] = 0;
+	    put_actor();
+	    
+	}
+	
+	void slow_down()
+	{
+		change_speed(get_speed() - 1);
+	}
+	void speed_up()
+	{
+		change_speed(get_speed() + 1);
+	}
     
 };
 #endif

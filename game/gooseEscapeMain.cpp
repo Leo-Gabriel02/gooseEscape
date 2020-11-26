@@ -59,7 +59,7 @@ int main()
 	{
 		randomObjectPlacement(map, SHALL_NOT_PASS);
 	}
-    //place 5 powerups to slow the goose down and 5 to ___
+    //place 5 powerups to slow the goose down and 5
 	for(int count = 0; count < POWERUP_AMOUNT; count++)
 	{
 		randomObjectPlacement(map, SLOW_GOOSE);
@@ -88,10 +88,11 @@ int main()
 */
     int keyEntered = TK_A;  // can be any valid value that is not ESCAPE or CLOSE
     bool has_not_won = true;
-    
+    int goose_slow_counter = 0;
+    const int GOOSE_SLOW_TICKS = 10;
     
     while(keyEntered != TK_ESCAPE && keyEntered != TK_CLOSE 
-                    && !captured(player,goose) && has_not_won)
+			      && !captured(player,goose) && has_not_won)
 	{
 	    // get player key press
 	    keyEntered = terminal_read();
@@ -104,6 +105,16 @@ int main()
     	    if(map[player.get_x()][player.get_y()] == WINNER)
     	    {
     	    	has_not_won = false;	
+			}
+			if(goose_slow_counter == 1)
+	  		    goose.speed_up();
+			goose_slow_counter--;
+			if(map[player.get_x()][player.get_y()] == SLOW_GOOSE)
+    	    {
+ 	 		    player.get_powerup(map);
+ 	 		    if(goose_slow_counter <= 0)
+	  			    goose.slow_down();	//only slow down the goose if it isnt slow already
+  			    goose_slow_counter = GOOSE_SLOW_TICKS;	//always set the counter to 10
 			}
 
             // call the goose's chase function
