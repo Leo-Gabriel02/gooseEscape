@@ -30,10 +30,13 @@ int main()
 */
  	
     //make the player
-	Actor player(PLAYER_CHAR, 10,10,1);  // you probably don't want to start in the same place each time
+    const int HALF_BOARD_X = MAX_BOARD_X / 2;
+    const int PLAYER_SPEED_INITIAL = 1;
+	Actor player(PLAYER_CHAR, rand() % HALF_BOARD_X, rand() % MAX_BOARD_Y, PLAYER_SPEED_INITIAL);  // you probably don't want to start in the same place each time
 	
 	//make the monster
-	Actor goose(MONSTER_CHAR, 70,20,2);
+	const int GOOSE_SPEED_INITIAL = 2;
+	Actor goose(MONSTER_CHAR, rand() % HALF_BOARD_X + HALF_BOARD_X, rand() % MAX_BOARD_Y, GOOSE_SPEED_INITIAL);
 	
 	// Declare the array that will hold the game board "map"
     int map[MAX_BOARD_X][MAX_BOARD_Y] = {EMPTY};
