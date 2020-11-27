@@ -48,6 +48,7 @@ void straightWalls(int map[MAX_BOARD_X][MAX_BOARD_Y], int length);
 
 void game_world_print(int map[MAX_BOARD_X][MAX_BOARD_Y]);
 
+int tileOnMap(int map[MAX_BOARD_X][MAX_BOARD_Y], Actor & player);
 
 /*
     Do something when the goose captures the player

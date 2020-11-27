@@ -12,7 +12,7 @@ using namespace std;
 Console out;
 
 int main()
-{
+{	
 	//Set up the window.  Don't edit these two lines
     terminal_open();
   	terminal_set(SETUP_MESSAGE);
@@ -110,37 +110,37 @@ int main()
         {
             // move the player, you can modify this function
     	    movePlayer(keyEntered,player,map);
-
-			if(!teleported1)
-			{
-			    //portal 1 corner 1
-				if(player.get_x() == portal1[0][0] && player.get_y() == portal1[0][1]){
-					teleported1 = true;	
-		  		    player.teleport(portal1[1][0], portal1[1][1]); //teleport to portal 1 corner 2
+			if(tileOnMap(map, player) == PORTAL){
+				if(!teleported1)
+				{
+			    	//portal 1 corner 1
+					if(player.get_x() == portal1[0][0] && player.get_y() == portal1[0][1]){
+						teleported1 = true;	
+		  		    	player.teleport(portal1[1][0], portal1[1][1]); //teleport to portal 1 corner 2
+					}
+					//portal 1 corner 2
+					else if(player.get_x() == portal1[1][0] && player.get_y() == portal1[1][1]){
+    			    	teleported1 = true;
+			        	player.teleport(portal1[0][0], portal1[0][1]); //teleport to portal 1 corner 2
+					}
 				}
-				//portal 1 corner 2
-				else if(player.get_x() == portal1[1][0] && player.get_y() == portal1[1][1]){
-    			    teleported1 = true;
-			        player.teleport(portal1[0][0], portal1[0][1]); //teleport to portal 1 corner 2
+				if(!teleported2)
+				{
+			    	//portal 2 corner 1
+			    	if(player.get_x() == portal2[0][0] && player.get_y() == portal2[0][1]){
+						teleported2 = true;	
+	  		        	player.teleport(portal2[1][0], portal2[1][1]); //teleport to portal 2 corner 2
+	  		    	}
+			    	//portal 2 corner 2
+			    	else if(player.get_x() == portal2[1][0] && player.get_y() == portal2[1][1]){
+						teleported2 = true;	
+   			 	    	player.teleport(portal2[0][0], portal2[0][1]); //teleport to portal 2 corner 2
+   			 		}
 				}
 			}
-			if(!teleported2)
-			{
-			    //portal 2 corner 1
-			    if(player.get_x() == portal2[0][0] && player.get_y() == portal2[0][1]){
-					teleported2 = true;	
-	  		        player.teleport(portal2[1][0], portal2[1][1]); //teleport to portal 2 corner 2
-	  		    }
-			    //portal 2 corner 2
-			    else if(player.get_x() == portal2[1][0] && player.get_y() == portal2[1][1]){
-					teleported2 = true;	
-   			 	    player.teleport(portal2[0][0], portal2[0][1]); //teleport to portal 2 corner 2
-   			 	}
-				teleported2 = true;
-			}
 
 
-    	    if(map[player.get_x()][player.get_y()] == WINNER)
+    	    if(tileOnMap(map, player) == WINNER)
     	    	has_not_won = false;	
 			
 			
@@ -148,7 +148,7 @@ int main()
 	  		    goose.speed_up();
 			goose_slow_counter--;	//decrement counter each tick
 			
-			if(map[player.get_x()][player.get_y()] == SLOW_GOOSE) //when get powerup
+			if(tileOnMap(map, player) == SLOW_GOOSE) //when get powerup
     	    {
  	 		    player.get_powerup(map);
  	 		    if(goose_slow_counter <= 0) //no active powerup

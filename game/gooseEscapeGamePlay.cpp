@@ -119,6 +119,12 @@ bool captured(Actor const & player, Actor const & monster)
          && player.get_y() == monster.get_y());
 }
 
+
+int tileOnMap(int map[MAX_BOARD_X][MAX_BOARD_Y], Actor & player)
+{
+	return map[player.get_x()][player.get_y()];
+}
+
 /*
     Move the player to a new location based on the user input.  You may want
     to modify this if there are extra controls you want to add.
